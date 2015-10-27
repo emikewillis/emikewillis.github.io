@@ -32,6 +32,6 @@ After letting around 8 packages re-install, I was able to install Node.js and be
 * The bindist USE flag enables certain features that are patent encumbered. These features may or may not be important to you, especially in OpenSSL and OpenSSH. The 2nd and 3rd posts in the [first forum thread][forumpost2] I linked elaborate on this a bit, as well as list which OpenSSL features are affected by the USE flag.
 
 
-[jekyll]: [http://jekyllrb.com/]
+[jekyll]: http://jekyllrb.com/
 [forumpost1]: https://forums-lb.gentoo.org/viewtopic-t-1020062.html?sid=10829fdcb814a382f4374370f07d53d5
 [forumpost2]: https://forums.gentoo.org/viewtopic-t-985044-highlight-bind+openssl.html
