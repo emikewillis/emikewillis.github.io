@@ -6,12 +6,11 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <title>About</title>
-  <meta name="description" content="Nerdy stuff
-">
+  <title>Node.js, Gentoo, and USE flags</title>
+  <meta name="description" content="In the process of setting up this Jekyll-powered blog with Github pages, I stumbled my way into a USE flag conflict of sorts.">
 
   <link rel="stylesheet" href="/css/main.css">
-  <link rel="canonical" href="http://yourdomain.com/about/">
+  <link rel="canonical" href="http://yourdomain.com/gentoo/2015/10/26/nodejs-and-bindistt.html">
   <link rel="alternate" type="application/rss+xml" title="TISNAB is not a blog" href="http://yourdomain.com/feed.xml" />
 </head>
 
@@ -58,15 +57,36 @@
         <div class="post">
 
   <header class="post-header">
-    <h1 class="post-title">About</h1>
+    <h1 class="post-title">Node.js, Gentoo, and USE flags</h1>
+    <p class="post-meta">Oct 26, 2015</p>
   </header>
 
   <article class="post-content">
-    <p>This is the base Jekyll theme. You can find out more info about customizing your Jekyll theme, as well as basic Jekyll usage documentation at <a href="http://jekyllrb.com/">jekyllrb.com</a></p>
+    <p>In the process of setting up this <a href="[http://jekyllrb.com/]">Jekyll</a>-powered blog with Github pages, I stumbled my way into a USE flag conflict of sorts.</p>
 
-<p>You can find the source code for the Jekyll new theme at: <a href="https://github.com/jglovier/jekyll-new">github.com/jglovier/jekyll-new</a></p>
+<p>The Node.js ebuild (net-libs/nodejs) requires that OpenSSL (dev-libs/openssl) be installed without the bindist USE flag enabled. Additionally, OpenSSH (net-misc/openssh) requires that its bindist flag be the same as OpenSSL’s. Some searching lead me to <a href="https://forums.gentoo.org/viewtopic-t-985044-highlight-bind+openssl.html">this</a> thread on the Gentoo forums, which reveals that the generic stage3 tarball from which most Gentoo installations arise ships with the bindist flag enabled globally.</p>
 
-<p>You can find the source code for Jekyll at <a href="https://github.com/jekyll/jekyll">github.com/jekyll/jekyll</a></p>
+<p>Following the lead of a post in <a href="https://forums-lb.gentoo.org/viewtopic-t-1020062.html?sid=10829fdcb814a382f4374370f07d53d5">this other thread</a>, I set my USE flags in /etc/portage/make.conf like so:</p>
+
+<div class="highlight"><pre><code class="language-ini" data-lang="ini"><span class="na">USE</span><span class="o">=</span><span class="s">&quot;-bindist&quot;</span></code></pre></div>
+
+<p>And ran the following emerge command to rebuild everything affected by the USE flag change:</p>
+
+<div class="highlight"><pre><code class="language-bash" data-lang="bash">emerge -auDN --with-bdeps<span class="o">=</span>y @world</code></pre></div>
+
+<p>After letting around 8 packages re-install, I was able to install Node.js and begin using Jekyll.</p>
+
+<h1 id="sidenotes">Sidenotes</h1>
+
+<ul>
+  <li>
+    <p>This issue may also be fixable by disabling bindist for OpenSSL and OpenSSH only, instead of globally. I did not try doing that, however.</p>
+  </li>
+  <li>
+    <p>The bindist USE flag enables certain features that are patent encumbered. These features may or may not be important to you, especially in OpenSSL and OpenSSH. The 2nd and 3rd posts in the <a href="https://forums.gentoo.org/viewtopic-t-985044-highlight-bind+openssl.html">first forum thread</a> I linked elaborate on this a bit, as well as list which OpenSSL features are affected by the USE flag.</p>
+  </li>
+</ul>
+
 
   </article>
 

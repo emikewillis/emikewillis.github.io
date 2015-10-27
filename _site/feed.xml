@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Your awesome title</title>
-    <description>Write an awesome description for your new site here. You can edit this line in _config.yml. It will appear in your document head meta (for Google search results) and in your feed.xml site description.
+    <title>TISNAB is not a blog</title>
+    <description>Nerdy stuff
 </description>
     <link>http://yourdomain.com/</link>
     <atom:link href="http://yourdomain.com/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Mon, 26 Oct 2015 19:37:52 -0400</pubDate>
-    <lastBuildDate>Mon, 26 Oct 2015 19:37:52 -0400</lastBuildDate>
+    <pubDate>Mon, 26 Oct 2015 20:37:44 -0400</pubDate>
+    <lastBuildDate>Mon, 26 Oct 2015 20:37:44 -0400</lastBuildDate>
     <generator>Jekyll v2.5.3</generator>
     
       <item>
@@ -66,6 +66,43 @@
         <category>jekyll</category>
         
         <category>update</category>
+        
+      </item>
+    
+      <item>
+        <title>Node.js, Gentoo, and USE flags</title>
+        <description>&lt;p&gt;In the process of setting up this &lt;a href=&quot;[http://jekyllrb.com/]&quot;&gt;Jekyll&lt;/a&gt;-powered blog with Github pages, I stumbled my way into a USE flag conflict of sorts.&lt;/p&gt;
+
+&lt;p&gt;The Node.js ebuild (net-libs/nodejs) requires that OpenSSL (dev-libs/openssl) be installed without the bindist USE flag enabled. Additionally, OpenSSH (net-misc/openssh) requires that its bindist flag be the same as OpenSSL’s. Some searching lead me to &lt;a href=&quot;https://forums.gentoo.org/viewtopic-t-985044-highlight-bind+openssl.html&quot;&gt;this&lt;/a&gt; thread on the Gentoo forums, which reveals that the generic stage3 tarball from which most Gentoo installations arise ships with the bindist flag enabled globally.&lt;/p&gt;
+
+&lt;p&gt;Following the lead of a post in &lt;a href=&quot;https://forums-lb.gentoo.org/viewtopic-t-1020062.html?sid=10829fdcb814a382f4374370f07d53d5&quot;&gt;this other thread&lt;/a&gt;, I set my USE flags in /etc/portage/make.conf like so:&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-ini&quot; data-lang=&quot;ini&quot;&gt;&lt;span class=&quot;na&quot;&gt;USE&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;-bindist&amp;quot;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;And ran the following emerge command to rebuild everything affected by the USE flag change:&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;emerge -auDN --with-bdeps&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;y @world&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;After letting around 8 packages re-install, I was able to install Node.js and begin using Jekyll.&lt;/p&gt;
+
+&lt;h1 id=&quot;sidenotes&quot;&gt;Sidenotes&lt;/h1&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;
+    &lt;p&gt;This issue may also be fixable by disabling bindist for OpenSSL and OpenSSH only, instead of globally. I did not try doing that, however.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;The bindist USE flag enables certain features that are patent encumbered. These features may or may not be important to you, especially in OpenSSL and OpenSSH. The 2nd and 3rd posts in the &lt;a href=&quot;https://forums.gentoo.org/viewtopic-t-985044-highlight-bind+openssl.html&quot;&gt;first forum thread&lt;/a&gt; I linked elaborate on this a bit, as well as list which OpenSSL features are affected by the USE flag.&lt;/p&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+</description>
+        <pubDate>Mon, 26 Oct 2015 14:17:18 -0400</pubDate>
+        <link>http://yourdomain.com/gentoo/2015/10/26/nodejs-and-bindistt.html</link>
+        <guid isPermaLink="true">http://yourdomain.com/gentoo/2015/10/26/nodejs-and-bindistt.html</guid>
+        
+        
+        <category>gentoo</category>
         
       </item>
     
